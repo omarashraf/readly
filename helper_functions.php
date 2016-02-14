@@ -33,4 +33,13 @@
 		return false;
 	}
 
+	function validFBLoginData($email) {
+		$check_user_sql = "SELECT * FROM users WHERE email = '" . $email . "'";
+		$users = mysql_query($check_user_sql);
+		if(mysql_num_rows($users) > 0) {
+			return true;
+		}
+		return false;
+	}
+
 ?>

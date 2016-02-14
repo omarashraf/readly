@@ -39,6 +39,13 @@ if ( isset( $session ) ) {
 	    $_SESSION['FBID'] = $fbid;           
         $_SESSION['FULLNAME'] = $fbfullname;
 	    $_SESSION['EMAIL'] =  $femail;
+      $retrieve_FB_user_data_sql = "SELECT * FROM users WHERE name = '" . $fbfullname . "'";
+               $res_tmp = mysql_query($retrieve_FB_user_data_sql);
+               if(mysql_num_rows($res_tmp) > 0) {
+                  while($tmp = mysql_fetch_assoc($res_tmp)) {
+                     $_SESSION['current_user_id'] = $tmp['id'];
+                  }
+               }
     /* ---- header location after session ----*/
   header("Location: homepage.php");
 } else {

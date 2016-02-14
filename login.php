@@ -44,6 +44,17 @@
    		if(isset($_POST['login'])) {
    			if(validLoginData($_POST['email'], $_POST['password'])) {
    				// destination to be changed.
+               $retrieve_user_data_sql = "SELECT * FROM users WHERE email = '" . $_POST['email'] . "' AND password = '" 
+               . $_POST['password'] . "'";
+               $res_tmp = mysql_query($retrieve_user_data_sql);
+               if(mysql_num_rows($res_tmp) > 0) {
+                  while($tmp = mysql_fetch_assoc($res_tmp)) {
+                     $_SESSION['current_user_id'] = $tmp['id'];
+                     $_SESSION['name'] = $tmp['name'];
+                     $_SESSION['email_normal'] = $tmp['email'];
+                     $_SESSION['image'] = $tmp['image'];
+                  }
+               }
    				header('Location: homepage.php');
    			} else {
    				echo "Wrong email/password combination.";
